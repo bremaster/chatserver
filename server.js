@@ -4,11 +4,18 @@ var app     = express();
 var server  = require('http').createServer(app);
 var io      = socket.listen( server );
 var port    = process.env.PORT || 3000;
+const cors = require("cors");
 
 server.listen(port, function () {
   console.log('Server listening at port %d', port);
 });
 
+var corsOptions = {
+  origin: '*',
+  optionsSuccessStatus: 200 // For legacy browser support
+}
+
+app.use(cors(corsOptions));
 
 io.on('connection', function (socket) {
 
