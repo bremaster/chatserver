@@ -3,10 +3,16 @@ var socket  = require('socket.io');
 var express = require('express');
 var app     = express();
 var server  = require('http').createServer(app);
-// var io      = new Server(server);
-var io      = socket.listen(server);
-var port    = process.env.PORT || 3000;
 // const cors = require("cors");
+// var io      = new Server(server);
+
+options={
+ cors:true,
+ origins:["http://localhost/"],
+}
+
+var io      = socket(server, options);
+var port    = process.env.PORT || 3000;
 
 var router = express.Router();
 
@@ -18,12 +24,11 @@ server.listen(port, function () {
   console.log('Server listening at port %d', port);
 });
 
-var corsOptions = {
-  "origin": "*",
-  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-  "preflightContinue": false,
-  "optionsSuccessStatus": 204
-}
+// var corsOptions = {
+//   "origin": ["http://localhost"],
+//   "optionsSuccessStatus": 204,
+//   "credentials": true
+// }
 
 // app.use(cors(corsOptions));
 
@@ -75,5 +80,5 @@ io.on('connection', function (socket) {
     	status              : data.status,
     });
   });
-  
+
 });
