@@ -6,6 +6,12 @@ var io      = socket.listen( server );
 var port    = process.env.PORT || 3000;
 const cors = require("cors");
 
+var router = express.Router();
+
+router.get('/', function (req, res) {
+  res.send('Wiki home page');
+})
+
 server.listen(port, function () {
   console.log('Server listening at port %d', port);
 });
@@ -18,6 +24,9 @@ var corsOptions = {
 }
 
 app.use(cors(corsOptions));
+
+app.use(router);
+
 
 io.on('connection', function (socket) {
 
