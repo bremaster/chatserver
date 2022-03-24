@@ -3,7 +3,7 @@ var express = require('express');
 var app     = express();
 var server  = require('http').createServer(app);
 // var io      = socket.listen( server );
-// var port    = process.env.PORT || 3000;
+var port    = process.env.PORT || 3000;
 // const cors = require("cors");
 
 var router = express.Router();
