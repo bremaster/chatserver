@@ -1,10 +1,12 @@
-var { Server }  = require('socket.io');
+// var { Server }  = require('socket.io');
+var socket  = require('socket.io');
 var express = require('express');
 var app     = express();
 var server  = require('http').createServer(app);
-var io      = new Server(server);
+// var io      = new Server(server);
+var io      = socket.listen(server);
 var port    = process.env.PORT || 3000;
-const cors = require("cors");
+// const cors = require("cors");
 
 var router = express.Router();
 
@@ -23,7 +25,7 @@ var corsOptions = {
   "optionsSuccessStatus": 204
 }
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 app.use(router);
 
