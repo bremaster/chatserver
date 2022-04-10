@@ -8,7 +8,7 @@ var server  = require('http').createServer(app);
 
 options={
  cors:true,
- origins:["http://localhost/"],
+ origins: "*",
 }
 
 var io      = socket(server, options);
@@ -78,6 +78,12 @@ io.on('connection', function (socket) {
       id_user_sender      : data.id_user_sender,
     	id_user_receiver    : data.id_user_receiver,
     	status              : data.status,
+    });
+  });
+
+  socket.on( 'notification', function( data ) {
+    io.sockets.emit( 'notification', {
+      status      : 'OK'
     });
   });
 
