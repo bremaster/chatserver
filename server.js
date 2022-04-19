@@ -83,7 +83,8 @@ io.on('connection', function (socket) {
 
   socket.on( 'notification', function( data ) {
     io.sockets.emit( 'notification', {
-      status      : 'OK'
+      status      : 'OK',
+      id: data.id
     });
   });
 
