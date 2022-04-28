@@ -53,7 +53,8 @@ io.on('connection', function (socket) {
 
   socket.on( 'chat', function( data ) {
     io.sockets.emit( 'chat', {
-    	id_user_sender      : data.id_user_sender,
+      id_user_sender      : data.id_user_sender,
+    	id_message          : data.id_message,
     	id_user_receiver    : data.id_user_receiver,
     	id_room             : data.id_room,
     	message             : data.message,
@@ -87,5 +88,4 @@ io.on('connection', function (socket) {
       id: data.id
     });
   });
-
 });
