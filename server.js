@@ -8,7 +8,7 @@ var server  = require('http').createServer(app);
 
 options={ 
  cors:true,
- origins: "*",
+ origins: "https://app.zoopr.io/",
 }
 
 var io      = socket(server, options);
