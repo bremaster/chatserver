@@ -50,7 +50,7 @@ io.on('connection', function (socket) {
       created_date        : data.created_date,
     });
   });
-
+ 
   socket.on( 'chat', function( data ) {
     io.sockets.emit( 'chat', {
       id_user_sender      : data.id_user_sender,
