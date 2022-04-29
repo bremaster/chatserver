@@ -6,7 +6,7 @@ var server  = require('http').createServer(app);
 // const cors = require("cors");
 // var io      = new Server(server);
 
-options={
+options={ 
  cors:true,
  origins: "*",
 }
