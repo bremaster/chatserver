@@ -17,7 +17,7 @@ var port    = process.env.PORT || 3000;
 var router = express.Router();
 
 router.get('/', function (req, res) {
-  res.send('Wiki home page. Mr.NEW');
+  res.send('Wiki home page. Mr');
 })
 
 server.listen(port, function () {
