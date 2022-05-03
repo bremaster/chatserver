@@ -34,7 +34,6 @@ server.listen(port, function () {
 
 app.use(router);
 
-
 io.on('connection', function (socket) {
 
   socket.on( 'room', function( data ) {
