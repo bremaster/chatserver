@@ -5,7 +5,7 @@ var app     = express();
 var server  = require('http').createServer(app);
 // const cors = require("cors");
 // var io      = new Server(server);
-
+ 
 options={ 
  cors:true,
  origins: "https://app.zoopr.io/",
