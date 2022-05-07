@@ -3,12 +3,15 @@ var socket  = require('socket.io');
 var express = require('express');
 var app     = express();
 var server  = require('http').createServer(app);
-// const cors = require("cors");
-// var io      = new Server(server);
- 
+var Web3 = require('web3');
+
+const provider = new Web3.providers.HttpProvider('https://goerli.infura.io/v3/037e409742d34513901d6b0fc5486d1d');
+const web3 = new Web3(provider);
+const apiToken = 'R8SY74NZ9PGKJAAEMB2G459UZRRAID65KN';
+
 options={ 
- cors:true,
- origins: "https://app.zoopr.io/",
+  cors:true,
+  origins: "https://app.zoopr.io/",
 }
 
 var io      = socket(server, options);
@@ -24,18 +27,9 @@ server.listen(port, function () {
   console.log('Server listening at port %d', port);
 });
 
-// var corsOptions = {
-//   "origin": ["http://localhost"],
-//   "optionsSuccessStatus": 204,
-//   "credentials": true
-// }
-
-// app.use(cors(corsOptions));
-
 app.use(router);
 
 io.on('connection', function (socket) {
-
   socket.on( 'room', function( data ) {
     io.sockets.emit( 'room', {
     	id_user_sender      : data.id_user_sender,
@@ -88,3 +82,33 @@ io.on('connection', function (socket) {
     });
   });
 });
+
+
+// Transactions
+let latestKnownBlockNumber = -1;
+let blockTime = 5000;
+
+// Our function that will triggered for every block
+async function processBlock(blockNumber) {
+  latestKnownBlockNumber = blockNumber;
+}
+
+// This function is called every blockTime, check the current block number and order the processing of the new block(s)
+async function checkCurrentBlock() {
+  const currentBlockNumber = await web3.eth.getBlockNumber()
+  while (latestKnownBlockNumber == -1 || currentBlockNumber > latestKnownBlockNumber) {
+    if(currentBlockNumber > latestKnownBlockNumber) {
+      let detail = await web3.eth.getBlock(currentBlockNumber);
+      for (var i = detail.transactions.length - 1; i >= 0; i--) {
+        let transaction = await web3.eth.getTransaction(detail.transactions[i]);
+      }
+    } else {
+      console.log("empty")
+    }
+
+    await processBlock(latestKnownBlockNumber == -1 ? currentBlockNumber : latestKnownBlockNumber + 1);
+  }
+  setTimeout(checkCurrentBlock, blockTime);
+}
+
+checkCurrentBlock()
